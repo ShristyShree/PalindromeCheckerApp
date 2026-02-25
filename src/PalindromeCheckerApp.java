@@ -2,31 +2,36 @@ public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
-        String word = "madam";
+        String input = "A man a plan a canal Panama";
 
-        boolean result = isPalindrome(word, 0, word.length() - 1);
+        // Step 1: Normalize string
+        String normalized = input.replaceAll("\\s+", "").toLowerCase();
 
-        if (result) {
-            System.out.println(word + " is a Palindrome");
+        // Step 2: Apply two-pointer palindrome logic
+        boolean isPalindrome = isPalindrome(normalized);
+
+        if (isPalindrome) {
+            System.out.println("\"" + input + "\" is a Palindrome");
         } else {
-            System.out.println(word + " is NOT a Palindrome");
+            System.out.println("\"" + input + "\" is NOT a Palindrome");
         }
     }
 
-    // Recursive method
-    public static boolean isPalindrome(String word, int start, int end) {
+    public static boolean isPalindrome(String word) {
 
-        // Base condition
-        if (start >= end) {
-            return true;
+        int start = 0;
+        int end = word.length() - 1;
+
+        while (start < end) {
+
+            if (word.charAt(start) != word.charAt(end)) {
+                return false;
+            }
+
+            start++;
+            end--;
         }
 
-        // If characters do not match
-        if (word.charAt(start) != word.charAt(end)) {
-            return false;
-        }
-
-        // Recursive call
-        return isPalindrome(word, start + 1, end - 1);
+        return true;
     }
 }
