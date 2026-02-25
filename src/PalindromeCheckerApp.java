@@ -1,39 +1,89 @@
-class PalindromeChecker {
+import java.util.Stack;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
-    // Encapsulated method
-    public boolean checkPalindrome(String input) {
+// Strategy Interface
+interface PalindromeStrategy {
+    boolean check(String input);
+}
 
-        if (input == null) {
-            return false;
+// Stack Implementation
+class StackStrategy implements PalindromeStrategy {
+
+    public boolean check(String input) {
+
+        Stack<Character> stack = new Stack<>();
+
+        for (char ch : input.toCharArray()) {
+            stack.push(ch);
         }
 
-        int start = 0;
-        int end = input.length() - 1;
-
-        while (start < end) {
-            if (input.charAt(start) != input.charAt(end)) {
+        for (char ch : input.toCharArray()) {
+            if (ch != stack.pop()) {
                 return false;
             }
-            start++;
-            end--;
         }
 
         return true;
     }
 }
 
+// Deque Implementation
+class DequeStrategy implements PalindromeStrategy {
+
+    public boolean check(String input) {
+
+        Deque<Character> deque = new ArrayDeque<>();
+
+        for (char ch : input.toCharArray()) {
+            deque.addLast(ch);
+        }
+
+        while (deque.size() > 1) {
+            if (deque.removeFirst() != deque.removeLast()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
+
+// Context Class
+class PalindromeService {
+
+    private PalindromeStrategy strategy;
+
+    // Constructor Injection
+    public PalindromeService(PalindromeStrategy strategy) {
+        this.strategy = strategy;
+    }
+
+    public boolean checkPalindrome(String input) {
+        return strategy.check(input);
+    }
+}
+
+// Main Application
 public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
         String input = "madam";
 
-        // Object creation
-        PalindromeChecker checker = new PalindromeChecker();
+        // Choose Strategy Dynamically
+        PalindromeStrategy strategy;
 
-        boolean result = checker.checkPalindrome(input);
+        // Change here to test different algorithms
+        strategy = new StackStrategy();
+        // strategy = new DequeStrategy();
+
+        PalindromeService service = new PalindromeService(strategy);
+
+        boolean result = service.checkPalindrome(input);
 
         if (result) {
+            System.out.println("Using " + strategy.getClass().getSimpleName());
             System.out.println("\"" + input + "\" is a Palindrome");
         } else {
             System.out.println("\"" + input + "\" is NOT a Palindrome");
