@@ -1,37 +1,42 @@
-public class PalindromeCheckerApp {
+class PalindromeChecker {
 
-    public static void main(String[] args) {
+    // Encapsulated method
+    public boolean checkPalindrome(String input) {
 
-        String input = "A man a plan a canal Panama";
-
-        // Step 1: Normalize string
-        String normalized = input.replaceAll("\\s+", "").toLowerCase();
-
-        // Step 2: Apply two-pointer palindrome logic
-        boolean isPalindrome = isPalindrome(normalized);
-
-        if (isPalindrome) {
-            System.out.println("\"" + input + "\" is a Palindrome");
-        } else {
-            System.out.println("\"" + input + "\" is NOT a Palindrome");
+        if (input == null) {
+            return false;
         }
-    }
-
-    public static boolean isPalindrome(String word) {
 
         int start = 0;
-        int end = word.length() - 1;
+        int end = input.length() - 1;
 
         while (start < end) {
-
-            if (word.charAt(start) != word.charAt(end)) {
+            if (input.charAt(start) != input.charAt(end)) {
                 return false;
             }
-
             start++;
             end--;
         }
 
         return true;
+    }
+}
+
+public class PalindromeCheckerApp {
+
+    public static void main(String[] args) {
+
+        String input = "madam";
+
+        // Object creation
+        PalindromeChecker checker = new PalindromeChecker();
+
+        boolean result = checker.checkPalindrome(input);
+
+        if (result) {
+            System.out.println("\"" + input + "\" is a Palindrome");
+        } else {
+            System.out.println("\"" + input + "\" is NOT a Palindrome");
+        }
     }
 }
