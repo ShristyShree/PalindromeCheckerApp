@@ -1,88 +1,32 @@
 public class PalindromeCheckerApp {
 
-    // Node class for Singly Linked List
-    static class Node {
-        char data;
-        Node next;
-
-        Node(char data) {
-            this.data = data;
-            this.next = null;
-        }
-    }
-
     public static void main(String[] args) {
 
         String word = "madam";
 
-        // Convert string to linked list
-        Node head = null;
-        Node tail = null;
+        boolean result = isPalindrome(word, 0, word.length() - 1);
 
-        for (int i = 0; i < word.length(); i++) {
-            Node newNode = new Node(word.charAt(i));
-
-            if (head == null) {
-                head = newNode;
-                tail = newNode;
-            } else {
-                tail.next = newNode;
-                tail = newNode;
-            }
-        }
-
-        if (isPalindrome(head)) {
+        if (result) {
             System.out.println(word + " is a Palindrome");
         } else {
             System.out.println(word + " is NOT a Palindrome");
         }
     }
 
-    // Palindrome check using fast & slow pointer
-    public static boolean isPalindrome(Node head) {
+    // Recursive method
+    public static boolean isPalindrome(String word, int start, int end) {
 
-        if (head == null || head.next == null)
+        // Base condition
+        if (start >= end) {
             return true;
-
-        Node slow = head;
-        Node fast = head;
-
-        // Find middle
-        while (fast != null && fast.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
         }
 
-        // Reverse second half
-        Node secondHalf = reverse(slow);
-
-        Node firstHalf = head;
-
-        // Compare both halves
-        while (secondHalf != null) {
-            if (firstHalf.data != secondHalf.data)
-                return false;
-
-            firstHalf = firstHalf.next;
-            secondHalf = secondHalf.next;
+        // If characters do not match
+        if (word.charAt(start) != word.charAt(end)) {
+            return false;
         }
 
-        return true;
-    }
-
-    // Reverse linked list
-    public static Node reverse(Node head) {
-
-        Node prev = null;
-        Node current = head;
-
-        while (current != null) {
-            Node nextNode = current.next;
-            current.next = prev;
-            prev = current;
-            current = nextNode;
-        }
-
-        return prev;
+        // Recursive call
+        return isPalindrome(word, start + 1, end - 1);
     }
 }
