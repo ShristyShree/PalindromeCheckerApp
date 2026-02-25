@@ -1,4 +1,6 @@
 import java.util.Stack;
+import java.util.Queue;
+import java.util.LinkedList;
 
 public class PalindromeCheckerApp {
 
@@ -7,21 +9,28 @@ public class PalindromeCheckerApp {
         // Original string
         String word = "madam";
 
-        // Create Stack
+        // Create Stack (LIFO)
         Stack<Character> stack = new Stack<>();
 
-        // Push characters into stack
+        // Create Queue (FIFO)
+        Queue<Character> queue = new LinkedList<>();
+
+        // Insert characters into both structures
         for (int i = 0; i < word.length(); i++) {
-            stack.push(word.charAt(i));
+            char ch = word.charAt(i);
+            stack.push(ch);      // LIFO
+            queue.add(ch);       // FIFO
         }
 
         boolean isPalindrome = true;
 
-        // Pop and compare
+        // Compare dequeue vs pop
         for (int i = 0; i < word.length(); i++) {
-            char poppedChar = stack.pop();
 
-            if (word.charAt(i) != poppedChar) {
+            char fromQueue = queue.remove();   // FIFO
+            char fromStack = stack.pop();      // LIFO
+
+            if (fromQueue != fromStack) {
                 isPalindrome = false;
                 break;
             }
