@@ -2,20 +2,21 @@ public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
-        // UC2: Hardcoded Palindrome Check
-        String word = "madam";   // Hardcoded string
+        // UC3: Palindrome Check using String Reverse
 
+        String original = "level";
         String reversed = "";
 
-        for (int i = word.length() - 1; i >= 0; i--) {
-            reversed = reversed + word.charAt(i);
+        // Reverse string using loop
+        for (int i = original.length() - 1; i >= 0; i--) {
+            reversed = reversed + original.charAt(i);
         }
 
-        if (word.equals(reversed)) {
-            System.out.println(word + " is a Palindrome");
+        // Compare original and reversed
+        if (original.equals(reversed)) {
+            System.out.println(original + " is a Palindrome");
         } else {
-            System.out.println(word + " is NOT a Palindrome");
+            System.out.println(original + " is NOT a Palindrome");
         }
-
     }
 }
